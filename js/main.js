@@ -116,3 +116,16 @@ function floatingObject(selector, delay, size) {
 floatingObject(".floating1", 1, 15);
 floatingObject(".floating2", 0.5, 15);
 floatingObject(".floating3", 1.5, 20);
+
+const spyEls = document.querySelectorAll("section.scroll-spy");
+// Scene() 특정한 요소를 감시하는 옵션을 지정해주는 메서드
+// setClassToggle() html 클래스를 넣었다 뺐다 제어해주는 역할
+// addTo() 컨트롤러라는 개념의 내용을 추가하기 위해 사용해야함
+spyEls.forEach(function (spyEl) {
+  new ScrollMagic.Scene({
+    triggerElement: spyEl, // 보여짐 여부를 감시할 요소를 지정
+    triggerHook: 0.8, // 뷰포트 지점
+  })
+    .setClassToggle(spyEl, "show") // hook 지점을 넘으면 실행되면서 'show'라는 클래스가 추가됨 (요소, 클래스이름)
+    .addTo(new ScrollMagic.Controller());
+});
