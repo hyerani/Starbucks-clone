@@ -89,3 +89,30 @@ promotionToggleBtn.addEventListener("click", function () {
     promotionEl.classList.remove("hide");
   }
 });
+
+// 범위 랜덤 함수(소수점 2자리까지), (1, 7)을 입력해주면 1~7까지의 랜덤한 숫자를 반환
+function random(min, max) {
+  // `.toFixed()`를 통해 반환된 문자 데이터를,
+  // `parseFloat()`을 통해 소수점을 가지는 숫자 데이터로 변환
+  return parseFloat((Math.random() * (max - min) + min).toFixed(2));
+}
+
+// 둥둥 떠다니는 에니메이션 이미지
+function floatingObject(selector, delay, size) {
+  // gsap.to(요소, 시간, 옵션)
+  gsap.to(
+    selector, // 선택자
+    random(1.5, 2.5), // 에니메이션 동작 시간
+    {
+      // 옵션
+      y: size, // y축 이동
+      repeat: -1, // 무한반복
+      yoyo: true, // 재생된 에니메이션을 다시 뒤로 재생
+      ease: Power1.easeInOut, // gsap easing 사이트 참고 조금 더 자연스럽게 설정해주는 옵션
+      delay: random(0, delay), // 지연시간
+    }
+  );
+}
+floatingObject(".floating1", 1, 15);
+floatingObject(".floating2", 0.5, 15);
+floatingObject(".floating3", 1.5, 20);
