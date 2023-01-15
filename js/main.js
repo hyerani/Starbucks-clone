@@ -23,19 +23,36 @@ const badgeEl = document.querySelector("header .badges");
 window.addEventListener(
   "scroll",
   _.throttle(function () {
+    // 배지 숨기기
     if (window.scrollY > 500) {
       gsap.to(badgeEl, 0.6, {
         opacity: 0,
         display: "none",
       });
+      // 버튼 보이기
+      gsap.to("#to-top", 0.2, {
+        x: 0,
+      });
     } else {
+      // 배지 보이기
       gsap.to(badgeEl, 0.6, {
         opacity: 1,
         display: "block",
       });
+      // 버튼 숨기기
+      gsap.to("#to-top", 0.2, {
+        x: 100,
+      });
     }
   }, 300)
 );
+
+const toTopEl = document.querySelector("#to-top");
+toTopEl.addEventListener("click", function () {
+  gsap.to(window, 0.7, {
+    scrollTo: 0, // 페이지가 시작하는 상단 0 으로 이동
+  });
+});
 
 // 이미지 순차 출력
 const fadeEls = document.querySelectorAll(".visual .fade-in");
@@ -55,6 +72,7 @@ new Swiper(".notice-line .swiper-container", {
   loop: true,
 });
 
+// 메인 슬라이드 부분
 new Swiper(".promotion .swiper-container", {
   slidesPerView: 3, // 한번에 보여줄 슬라이드 개수
   spaceBetween: 10, // 슬라이드 사이 여백
@@ -71,6 +89,18 @@ new Swiper(".promotion .swiper-container", {
     // 이전버튼 다음버튼
     prevEl: ".promotion .swiper-prev",
     nextEl: ".promotion .swiper-next",
+  },
+});
+
+// 하단 슬라이드 부분
+new Swiper(".awards .swiper-container", {
+  autoplay: true,
+  loop: true,
+  spaceBetween: 30,
+  slidesPerView: 5,
+  navigation: {
+    prevEl: ".awards .swiper-prev",
+    nextEl: ".awards .swiper-next",
   },
 });
 
@@ -129,3 +159,6 @@ spyEls.forEach(function (spyEl) {
     .setClassToggle(spyEl, "show") // hook 지점을 넘으면 실행되면서 'show'라는 클래스가 추가됨 (요소, 클래스이름)
     .addTo(new ScrollMagic.Controller());
 });
+
+const thisYear = document.querySelector(".this-year");
+thisYear.textContent = new Date().getFullYear(); // 2023
